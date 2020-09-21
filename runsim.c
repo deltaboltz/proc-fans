@@ -1,3 +1,9 @@
+//TODO make main function still
+//	process children
+//	fork children
+//	use waitpid to wait on children
+//
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
