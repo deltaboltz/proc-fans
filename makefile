@@ -1,14 +1,21 @@
+C = gcc
+CFLAGS = -I. -g -Wall
+EXEC = runsim
+OBJS = runsim.o
 
-output: main.o message.o
-	g++ main.o message.o -o output
+DEPS=
+%.o: %.c $(DEPS)
+        $(CC) -c -o $@ $< $(CFLAGS)
 
-main.o: main.cpp
-	g++ -c main.cpp
+runsim: $(OBJS)
+        g++ -c main.cpp
 
-message.o: message.cpp message.h
-	g++ -c message.cpp
+testsim: testsim.c
+        $(CC) -o testsim testsim.c
+
+all:
+        runsim testsim
 
 
 clean:
-	rm *.o output
-
+        rm $(EXEC) $(OBJS) testsim testsim.o
