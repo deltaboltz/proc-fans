@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <getopt.h>
 
+const int MAX = 100;
 char** get_exec_argv(char* str);
 void print_usage();
 
@@ -77,34 +78,74 @@ void print_usage()
 
 int main(int argc, char *argv[])
 {
-	//set max number of concurrent children
-	//get count of number of children
+	//Limit set by cmdln arguments
+	int* procLimit;
+	procLimit = parse_cmd_line_args(argc, argv);
+
+	//Number of children allowed
+	int procCount;
+	char cmd[MAX];
+	
+	//Child proc id
+	pid_t childpid = 0;
+	char** exec_argv;
+	
+	
+	while(fgets(cmd, MAX, stdin))
+	{
+		//Wait for child to end
+		//Decrement procCount
+		if(procCount == *procLimit)
+		{
+			wait(NULL);
+			procCount--;
+		}
+	
+	
+		//Check to see if we fork a child
+		if((childpid = fork()) == 0
+		{
+			//Remove newlines
+			strtok(cmd, "\n")
+		
+			//pass execv
+			exec_argv = get_exec_argv(cmd);
+
+			//execvp
+			execvp(exec_argv[0], exec_argv);
+
+			//print perror
+			perror("Child fault: execvp failed);
+			return 1;
+		}
+
+		//Check to see if fork failed
+		if(childpid == -1)
+		{
+			perror("Child fault: fork failed);
+			return1;
+		}
+		
+		//Increment procCount since we forked
+		procCount++;
 	
 
-
-	//process cmd argument
-	//get childpid
-	//pass execv
-	
-
-	//get limit user inputted for procLimit
-	procLimit = parse_cmd_line_args(argc, argv)
-
-	//check to see if we fork a child
-	//exec_argv
-	//execvp
-	//print a perror
-	
-
-	//increment procCount
-	//wait
-	//decrement procCount
-	
+		//Wait check, did child finish?
+		if(waitpid(-1, NULL, WNOHANG) > 0)
+		{
+			//Child finished, decrement
+			procCount--;
+		}
+	}
 
 	//check to see if childpid is > 0
-	//if so while(NULL) > 0
-	
+	if(childpid > 0)
+	{
+		//if so while wait(NULL) > 0
+		while(wait(NULL) > 0);
+	}
+
 	//deallocate procLimit
-	
+	free(procLimit);
 	return 0;
 }
