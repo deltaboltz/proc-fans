@@ -74,3 +74,37 @@ void print_usage()
 	fprintf(stderr, "-n is the max number of concurrent children allowed");
 	exit(2);
 }
+
+int main(int argc, char *argv[])
+{
+	//set max number of concurrent children
+	//get count of number of children
+	
+
+
+	//process cmd argument
+	//get childpid
+	//pass execv
+	
+
+	//get limit user inputted for procLimit
+	procLimit = parse_cmd_line_args(argc, argv)
+
+	//check to see if we fork a child
+	//exec_argv
+	//execvp
+	//print a perror
+	
+
+	//increment procCount
+	//wait
+	//decrement procCount
+	
+
+	//check to see if childpid is > 0
+	//if so while(NULL) > 0
+	
+	//deallocate procLimit
+	
+	return 0;
+}
