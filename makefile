@@ -8,13 +8,13 @@ DEPS=
         $(CC) -c -o $@ $< $(CFLAGS)
 
 runsim: $(OBJS)
-        g++ -c main.cpp
+        gcc -c main.cpp
 
 testsim: testsim.c
         $(CC) -o testsim testsim.c
 
 all:
-        runsim testsim
+	runsim testsim
 
 
 clean:
