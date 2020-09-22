@@ -14,7 +14,7 @@ runsim: $(OBJS)
 	gcc -o $(EXEC) $^ $(CFLAGS)
 
 clean:
-	rm $(EXEC) $(OBJS) testsim.o testsim
+	rm $(EXEC) $(OBJS) testsim
 
-testsim: testsim.o
+testsim: testsim.c
 	$(CC) -o testsim testsim.c

@@ -108,7 +108,7 @@ char** get_exec_argv(char* str)
 		substr = strtok(NULL, " ");
 		i++;
 	}
-	exec_argv[i] == NULL;
+	exec_argv[i] = NULL;
 
 	return exec_argv; 
 }
