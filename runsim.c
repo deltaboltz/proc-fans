@@ -11,10 +11,9 @@
 #include <err.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <unistd.h>
 #include <getopt.h>
 
-const int MAX = 10;
+const int MAX_CANON = 10;
 char** get_exec_argv(char* str);
 void print_usage();
 
@@ -24,18 +23,20 @@ int main(int argc, char *argv[])
 {
 	//Limit set by cmdln arguments
 	int* procLimit;
-	procLimit = parse_cmd_line_args(argc, argv);
+	
 
 	//Number of children allowed
-	int procCount;
-	char cmd[MAX];
+	int procCount = 0;
+	char cmd[MAX_CANON];
 	
 	//Child proc id
 	pid_t childpid = 0;
 	char** exec_argv;
 	
+	procLimit = parse_cmd_line_args(argc, argv);
 	
-	while(fgets(cmd, MAX, stdin))
+	
+	while(fgets(cmd, MAX_CANON, stdin))
 	{
 		if(procCount == *procLimit)
 		{
