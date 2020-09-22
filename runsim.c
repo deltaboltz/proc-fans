@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <getopt.h>
 
-const int MAX = 100;
+const int MAX = 10;
 char** get_exec_argv(char* str);
 void print_usage();
 
@@ -37,8 +37,6 @@ int main(int argc, char *argv[])
 	
 	while(fgets(cmd, MAX, stdin))
 	{
-		//Wait for child to end
-		//Decrement procCount
 		if(procCount == *procLimit)
 		{
 			wait(NULL);
@@ -47,27 +45,27 @@ int main(int argc, char *argv[])
 	
 	
 		//Check to see if we fork a child
-		if((childpid = fork()) == 0
+		if((childpid = fork()) == 0)
 		{
 			//Remove newlines
-			strtok(cmd, "\n")
+			strtok(cmd, "\n");
 		
-			//pass execv
+			//pass execvp
 			exec_argv = get_exec_argv(cmd);
 
 			//execvp
 			execvp(exec_argv[0], exec_argv);
 
 			//print perror
-			perror("Child fault: execvp failed);
+			perror("Child fault: execvp failed");
 			return 1;
 		}
 
 		//Check to see if fork failed
 		if(childpid == -1)
 		{
-			perror("Child fault: fork failed);
-			return1;
+			perror("Child fault: fork failed");
+			return 1;
 		}
 		
 		//Increment procCount since we forked
@@ -118,7 +116,7 @@ int* parse_cmd_line_args(int argc, char *argv[])
 {	
 	int option;
 
-	int* procLimit = malloc(sizeif(int));
+	int* procLimit = malloc(sizeof(int));
 
 	if(argc < 2)
 	{
