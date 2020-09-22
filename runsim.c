@@ -22,26 +22,26 @@ int* parse_cmd_line_args(int argc, char *argv[]);
 int main(int argc, char *argv[])
 {
 	//Limit set by cmdln arguments
-	int* procLimit;
+	int* proc_limit;
 	
 
 	//Number of children allowed
-	int procCount = 0;
+	int proc_count = 0;
 	char cmd[MAX_CANON];
 	
 	//Child proc id
 	pid_t childpid = 0;
 	char** exec_argv;
 	
-	procLimit = parse_cmd_line_args(argc, argv);
+	proc_limit = parse_cmd_line_args(argc, argv);
 	
 	
 	while(fgets(cmd, MAX_CANON, stdin))
 	{
-		if(procCount == *procLimit)
+		if(proc_count == *proc_limit)
 		{
 			wait(NULL);
-			procCount--;
+			procCount -= 1;
 		}
 	
 	
@@ -70,14 +70,14 @@ int main(int argc, char *argv[])
 		}
 		
 		//Increment procCount since we forked
-		procCount++;
+		proc_count += 1;
 	
 
 		//Wait check, did child finish?
 		if(waitpid(-1, NULL, WNOHANG) > 0)
 		{
 			//Child finished, decrement
-			procCount--;
+			proc_count -= 1;
 		}
 	}
 
@@ -89,18 +89,19 @@ int main(int argc, char *argv[])
 	}
 
 	//deallocate procLimit
-	free(procLimit);
+	free(proc_limit);
 	return 0;
 }
 
 char** get_exec_argv(char* str)
 {
-	int i = 0;
+	
 	char* substr;
 	char** exec_argv = malloc(10 * sizeof(char));
 
 	substr = strtok(str, " ");
 
+	int i = 0;
 	while(substr != NULL)
 	{
 		exec_argv[i] = malloc(20 * sizeof(char));
@@ -115,15 +116,16 @@ char** get_exec_argv(char* str)
 
 int* parse_cmd_line_args(int argc, char *argv[])
 {	
-	int option;
+	
 
-	int* procLimit = malloc(sizeof(int));
+	int* proc_limit = malloc(sizeof(int));
 
 	if(argc < 2)
 	{
 		print_usage();
 	}
 	
+	int option;
 	while((option = getopt(argc, argv, "n:h")) != -1)
 	switch(option)
 	{
@@ -131,7 +133,7 @@ int* parse_cmd_line_args(int argc, char *argv[])
 			print_usage();
 		
 		case 'n':
-			*procLimit = atoi(optarg);
+			*proc_limit = atoi(optarg);
 			break;
 		
 		default:
