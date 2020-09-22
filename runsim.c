@@ -5,12 +5,12 @@
 //
 
 #include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
 #include <string.h>
 #include <err.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <ctype.h>
 #include <getopt.h>
 
 const int MAX_CANON = 10;
