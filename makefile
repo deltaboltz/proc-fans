@@ -1,4 +1,4 @@
-C = gcc
+CC = gcc
 CFLAGS = -I. -g -Wall
 EXEC = runsim
 OBJS = runsim.o
@@ -14,7 +14,7 @@ runsim: $(OBJS)
 	gcc -o $(EXEC) $^ $(CFLAGS)
 
 clean:
-	rm $(EXEC) $(OBJS) testsim testsim.o
+	rm $(EXEC) $(OBJS) testsim.o testsim
 
-testsim: testsim.c
+testsim: testsim.o
 	$(CC) -o testsim testsim.c
