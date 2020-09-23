@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
 	while(fgets(cmd, MAX_CANON, stdin)){
 		if(proc_count == *proc_limit){
 			wait(NULL);
-			procCount -= 1;
+			proc_count -= 1;
 		}
 	
 	
@@ -122,7 +122,7 @@ int* parse_cmd_line_args(int argc, char *argv[]){
 			print_usage();
 	}
 
-	return procLimit;
+	return proc_limit;
 }
 
 void print_usage(){
