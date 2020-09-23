@@ -2,26 +2,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
-{
-	int i;
-	int repeat;
-	int sleepTime;
-	
-	if(argc != 3)
-	{
-		fprintf(stderr, "Usage %s repeatFactor sleep NULL\n", argv[0]);
-		return 1;
-	}
+int main (int argc, char *argv[]) {
 
-	repeat = atoi(argv[1]);
-	sleepTime = atoi(argv[2]);
+    int i;
+    int repeat_factor; 
+    int sleep_time;      
 
-	for(i = 0; i < repeat; i++)
-	{
-		sleep(sleepTime);
-		fprintf(stderr, "pid: %d _ repeat factor: %d _ sleep time:%d\n", getpid(), repeat, sleepTime);
-	}
+    if (argc != 3) {
+        fprintf(stderr, "Usage: %s repeat_factor sleep_time NULL\n", argv[0]);
+        return 1;
+    }
+    
+    repeat_factor = atoi(argv[1]);
+    sleep_time = atoi(argv[2]);
 
-	return 0;
+    for (i = 0; i < repeat_factor; i++) {
+        sleep(sleep_time);
+        fprintf(stderr, "pid: %d _ repeat factor: %d _ sleep time: %d\n", getpid(), repeat_factor, sleep_time);
+    }
+
+    return 0;
 }
