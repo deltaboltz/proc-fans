@@ -19,8 +19,7 @@ void print_usage();
 
 int* parse_cmd_line_args(int argc, char *argv[]);
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
 	//Limit set by cmdln arguments
 	int* proc_limit;
 	
@@ -36,18 +35,15 @@ int main(int argc, char *argv[])
 	proc_limit = parse_cmd_line_args(argc, argv);
 	
 	
-	while(fgets(cmd, MAX_CANON, stdin))
-	{
-		if(proc_count == *proc_limit)
-		{
+	while(fgets(cmd, MAX_CANON, stdin)){
+		if(proc_count == *proc_limit){
 			wait(NULL);
 			procCount -= 1;
 		}
 	
 	
 		//Check to see if we fork a child
-		if((childpid = fork()) == 0)
-		{
+		if((childpid = fork()) == 0){
 			//Remove newlines
 			strtok(cmd, "\n");
 		
@@ -63,8 +59,7 @@ int main(int argc, char *argv[])
 		}
 
 		//Check to see if fork failed
-		if(childpid == -1)
-		{
+		if(childpid == -1){
 			perror("Child fault: fork failed");
 			return 1;
 		}
@@ -74,16 +69,14 @@ int main(int argc, char *argv[])
 	
 
 		//Wait check, did child finish?
-		if(waitpid(-1, NULL, WNOHANG) > 0)
-		{
+		if(waitpid(-1, NULL, WNOHANG) > 0){
 			//Child finished, decrement
 			proc_count -= 1;
 		}
 	}
 
 	//check to see if childpid is > 0
-	if(childpid > 0)
-	{
+	if(childpid > 0){
 		//if so while wait(NULL) > 0
 		while(wait(NULL) > 0);
 	}
@@ -93,8 +86,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-char** get_exec_argv(char* str)
-{
+char** get_exec_argv(char* str){
 	
 	char* substr;
 	char** exec_argv = malloc(10 * sizeof(char));
@@ -102,8 +94,7 @@ char** get_exec_argv(char* str)
 	substr = strtok(str, " ");
 
 	int i = 0;
-	while(substr != NULL)
-	{
+	while(substr != NULL){
 		exec_argv[i] = malloc(20 * sizeof(char));
 		exec_argv[i] = substr;
 		substr = strtok(NULL, " ");
@@ -114,21 +105,18 @@ char** get_exec_argv(char* str)
 	return exec_argv; 
 }
 
-int* parse_cmd_line_args(int argc, char *argv[])
-{	
+int* parse_cmd_line_args(int argc, char *argv[]){	
 	
 
 	int* proc_limit = malloc(sizeof(int));
 
-	if(argc < 2)
-	{
+	if(argc < 2){
 		print_usage();
 	}
 	
 	int option;
 	while((option = getopt(argc, argv, "n:h")) != -1)
-	switch(option)
-	{
+	switch(option){
 		case 'h':
 			print_usage();
 		
@@ -141,12 +129,9 @@ int* parse_cmd_line_args(int argc, char *argv[])
 	}
 
 	return procLimit;
-
-
 }
 
-void print_usage()
-{
+void print_usage(){
 	fprintf(stderr, "-n is the max number of concurrent children allowed");
 	exit(2);
 }
